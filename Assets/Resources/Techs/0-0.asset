@@ -15,8 +15,9 @@ MonoBehaviour:
   icon: {fileID: 0}
   name: Tower
   description: This is the only surviving stronghold of humanity
-  cost: 0
-  autoUnlock: 1
+  status: 0
+  canAutoUnlock: 1
+  cost: []
   isRootTech: 0
-  parentTechs:
-  - {fileID: 11400000, guid: 2335b034aaa47fd4c96d697715672a62, type: 2}
+  children: []
+  techRequirements: []
