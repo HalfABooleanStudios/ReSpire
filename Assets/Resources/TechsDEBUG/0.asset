@@ -10,15 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 337fa144c17e0214292b21635e2512d3, type: 3}
-  m_Name: 0-1
+  m_Name: 0
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
-  name: Drone
-  description: Loyal, hard working, multi-purpose machines are how the AI interacts
-    with the world
-  status: 0
-  canAutoUnlock: 1
-  cost: []
-  isRootTech: 0
-  children: []
+  name: Artificial Intelligence
+  description: You are awake
+  status: 1
+  canAutoUnlock: 0
+  cost:
+  - currency: {fileID: 11400000, guid: 98e7a910cac15a248a5cbca404cf36a5, type: 2}
+    cost: 100
+  isRootTech: 1
+  children:
+  - {fileID: 11400000, guid: 9917df504ca8f4440a98420be196114d, type: 2}
+  - {fileID: 11400000, guid: 5ef49c842fc812c4cae84c3a66eb025e, type: 2}
   techRequirements: []
