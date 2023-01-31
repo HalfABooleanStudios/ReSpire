@@ -49,7 +49,7 @@ public class TechManager : MonoBehaviour
         visible.Clear();
         hidden.Clear();
         // Read all Tech files in the folder "Resources/Techs"
-        List<Tech> allTechs = new List<Tech>(Resources.LoadAll<Tech>("Techs"));
+        List<Tech> allTechs = new List<Tech>(Resources.LoadAll<Tech>(GameManager.Instance.isDebug ? "TechsDEBUG" : "Techs"));
         foreach (Tech tech in allTechs)
         {
             if (tech.status == Tech.TechStatus.UNLOCKED)
