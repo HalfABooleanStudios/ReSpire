@@ -15,8 +15,13 @@ MonoBehaviour:
   icon: {fileID: 0}
   name: Artificial Intelligence
   description: You are awake
-  cost: 100
-  autoUnlock: 0
-  unlocked: 1
+  status: 1
+  canAutoUnlock: 0
+  cost:
+  - currency: {fileID: 11400000, guid: 98e7a910cac15a248a5cbca404cf36a5, type: 2}
+    cost: 100
   isRootTech: 1
-  parentTechs: []
+  children:
+  - {fileID: 11400000, guid: 9917df504ca8f4440a98420be196114d, type: 2}
+  - {fileID: 11400000, guid: 5ef49c842fc812c4cae84c3a66eb025e, type: 2}
+  techRequirements: []
