@@ -23,10 +23,11 @@ public class TechManager : MonoBehaviour
             }
             return instance;
         }
-    }    
+    }
 
-    public List<Tech> unlocked = new List<Tech>();
-    public List<Tech> locked = new List<Tech>();
+    public List<Tech> unlocked; // List of unlocked Techs
+    public List<Tech> visible; // List of visible, but locked, Techs
+    public List<Tech> hidden; // List of hidden Techs
 
     private void Awake()
     {
@@ -38,31 +39,70 @@ public class TechManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-            // This reads all ScriptableObjects in the folder Resources/Techs and sorts them into locked and unlocked
-            List<Tech> availableTechs = new List<Tech>(Resources.LoadAll<Tech>("Techs")); 
-            foreach (Tech availableTech in availableTechs)
+            ReadTechs();
+        }
+    }
+
+    private void ReadTechs()
+    {
+        unlocked.Clear();
+        visible.Clear();
+        hidden.Clear();
+        // Read all Tech files in the folder "Resources/Techs"
+        List<Tech> allTechs = new List<Tech>(Resources.LoadAll<Tech>(GameManager.Instance.isDebug ? "TechsDEBUG" : "Techs"));
+        foreach (Tech tech in allTechs)
+        {
+            if (tech.status == Tech.TechStatus.UNLOCKED)
             {
-                if (availableTech.unlocked)
-                {
-                    unlocked.Add(availableTech);
-                }
-                else
-                {
-                    locked.Add(availableTech);
-                }
+                unlocked.Add(tech);
+            }
+            else if (tech.status == Tech.TechStatus.VISIBLE)
+            {
+                visible.Add(tech);
+            }
+            else
+            {
+                hidden.Add(tech);
             }
         }
     }
 
-    public void UnlockTech(Tech tech)
+    public void UnlockTech(string techName)
     {
-        locked.Remove(tech);
-        unlocked.Add(tech);
+        Tech tech = new Tech();
+        foreach (Tech visibleTech in visible)
+        {
+            if (string.Equals(visibleTech.name, techName))
+            {
+                tech = visibleTech;
+                break;
+            }
+        }
+        UnlockTech(tech);
     }
 
-    public void LockTech(Tech tech)
+    public void UnlockTech(Tech tech)
     {
-        unlocked.Remove(tech);
-        locked.Add(tech);
+        tech.status = Tech.TechStatus.UNLOCKED;
+        foreach (Tech child in tech.children)
+        {
+            if (child.canAutoUnlock)
+            {
+                UnlockTech(child);
+            }
+            else
+            {
+                child.status = Tech.TechStatus.VISIBLE;
+            }
+        }
+        ReadTechs();
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            UnlockTech("Artificial Intelligence");
+        }
     }
 }
