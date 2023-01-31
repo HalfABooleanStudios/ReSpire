@@ -24,4 +24,17 @@ public class GameManager : MonoBehaviour
     }
 
     public bool isDebug = true;
+
+    private void Awake()
+    {
+        if (instance && instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
 }
