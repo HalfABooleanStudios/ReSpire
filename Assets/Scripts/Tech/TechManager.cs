@@ -43,13 +43,47 @@ public class TechManager : MonoBehaviour
         }
     }
 
+
+    // * * * * * * * * DEBUG * * * * * * * *
+    #if DEBUG
+        private List<Tech> HotSaveTechs(List<Tech> original)
+        {
+            List<Tech> hotSave = new List<Tech>();
+            // Create instances (copies)
+            foreach (Tech tech in original)
+            {
+                hotSave.Add(Instantiate(tech));
+            }
+            foreach (Tech tech in hotSave)
+            {
+                // Reassign children
+                for (int i = 0; i < tech.children.Count; i++)
+                {
+                    int saveIndex = original.IndexOf(tech.children[i]);
+                    tech.children[i] = hotSave[saveIndex];
+                }
+                // Reassign Requirements
+                for (int i = 0; i < tech.techRequirements.Count; i++)
+                {
+                    int saveIndex = original.IndexOf(tech.techRequirements[i]);
+                    tech.techRequirements[i] = hotSave[saveIndex];
+                }
+            }
+            return hotSave;
+        }
+    #endif
+    // * * * * * * * * END DEBUG * * * * * * * *
+
     private void ReadTechs()
     {
         unlocked.Clear();
         visible.Clear();
         hidden.Clear();
         // Read all Tech files in the folder "Resources/Techs"
-        List<Tech> allTechs = new List<Tech>(Resources.LoadAll<Tech>(GameManager.Instance.isDebug ? "TechsDEBUG" : "Techs"));
+        List<Tech> allTechs = new List<Tech>(Resources.LoadAll<Tech>("Techs"));
+        #if DEBUG
+            allTechs = HotSaveTechs(allTechs);
+        #endif
         foreach (Tech tech in allTechs)
         {
             if (tech.status == Tech.TechStatus.UNLOCKED)
