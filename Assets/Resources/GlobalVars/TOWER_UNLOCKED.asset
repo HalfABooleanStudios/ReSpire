@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: TOWER_UNLOCKED
   m_EditorClassIdentifier: 
   name: TOWER_UNLOCKED
-  type: 0
   boolVal: 0
   intVal: 0
   floatVal: 0
   stringVal: 
+  add: 0
+  multiply: 0
+  toggleCount: 0

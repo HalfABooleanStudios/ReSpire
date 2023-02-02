@@ -15,6 +15,11 @@ MonoBehaviour:
   icon: {fileID: 0}
   name: Artificial Intelligence
   description: You are awake
+  modifiers:
+  - globalVarName: TOWER_UNLOCKED
+    add: 0
+    multiply: 0
+    toggle: 1
   status: 1
   canAutoUnlock: 0
   cost:

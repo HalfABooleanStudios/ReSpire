@@ -69,7 +69,7 @@ public class GlobalVarManager : MonoBehaviour
 
     public void Modify(GlobalVarModifier modifier)
     {
-        GlobalVar targetGlobalVar;
+        GlobalVar targetGlobalVar = null;
         // Find the GlobalVar
         foreach (GlobalVar globalVar in globalVars)
         {
@@ -83,5 +83,52 @@ public class GlobalVarManager : MonoBehaviour
         targetGlobalVar.add += modifier.add;
         targetGlobalVar.multiply *= modifier.multiply;
         if (modifier.toggle) { targetGlobalVar.toggleCount += 1; }
+    }
+
+    public GlobalVar Get(string globalVarName)
+    {
+        GlobalVar targetGlobalVar = null;
+        // Find the GlobalVar
+        foreach (GlobalVar globalVar in globalVars)
+        {
+            if (string.Equals(globalVar.name, globalVarName))
+            {
+                targetGlobalVar = globalVar;
+                break;
+            }
+        }
+        return targetGlobalVar;
+    }
+
+    public bool GetBoolVal(string globalVarName)
+    {
+        GlobalVar globalVar = Get(globalVarName);
+        if (globalVar.toggleCount % 2 == 0)
+        {
+            // If number of toggles is even, bool remains at original state
+            return globalVar.boolVal;
+        }
+        else
+        {
+            // If number of toggles is odd, bool changes state
+            return !globalVar.boolVal;
+        }
+    }
+
+    public int GetIntVal(string globalVarName)
+    {
+        GlobalVar globalVar = Get(globalVarName);
+        return (int) ((globalVar.intVal + globalVar.add) * globalVar.multiply);
+    }
+
+    public float GetFloatVal(string globalVarName)
+    {
+        GlobalVar globalVar = Get(globalVarName);
+        return (globalVar.floatVal + globalVar.add) * globalVar.multiply;
+    }
+
+     public string GetStringVal(string globalVarName)
+    {
+        return Get(globalVarName).stringVal;
     }
 }

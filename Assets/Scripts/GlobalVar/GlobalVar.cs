@@ -17,10 +17,9 @@ public class GlobalVar : ScriptableObject
     public int toggleCount; // Number of times the var is toggled
     
 
-    public void Initialize(string name, GlobalVarType type, bool boolVal, int intVal, float floatVal, string stringVal)
+    public void Initialize(string name, bool boolVal, int intVal, float floatVal, string stringVal)
     {
         this.name = name;
-        this.type = type;
         this.boolVal = boolVal;
         this.intVal = intVal;
         this.floatVal = floatVal;
