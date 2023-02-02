@@ -118,6 +118,12 @@ public class TechManager : MonoBehaviour
     public void UnlockTech(Tech tech)
     {
         tech.status = Tech.TechStatus.UNLOCKED;
+        // Apply modifiers
+        foreach (GlobalVarModifier modifier in tech.modifiers)
+        {
+            GlobalVarManager.Instance.Modify(modifier);
+        }
+        // Make children visible
         foreach (Tech child in tech.children)
         {
             if (child.canAutoUnlock)
