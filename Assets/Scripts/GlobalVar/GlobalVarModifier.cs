@@ -9,7 +9,7 @@ public class GlobalVarModifier
     public float multiply;
     public bool toggle;
 
-    public CurrencyCost(string globalVarName, float add, float multiply, bool toggle)
+    public GlobalVarModifier(string globalVarName, float add, float multiply, bool toggle)
     {
         this.globalVarName = globalVarName;
         this.add = add;

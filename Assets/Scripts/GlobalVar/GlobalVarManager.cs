@@ -42,7 +42,7 @@ public class GlobalVarManager : MonoBehaviour
     }
 
 
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~DEBUG~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>DEBUG
     private List<GlobalVar> HotSaveGlobalVars(List<GlobalVar> original)
     {
         List<GlobalVar> hotSave = new List<GlobalVar>();
@@ -53,17 +53,35 @@ public class GlobalVarManager : MonoBehaviour
         }
         return hotSave;
     }
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~END DEBUG~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<END DEBUG
 
     private void ReadGlobalVars()
     {
         globalVars.Clear();
         // Read all GlobalVar files in the folder "Resources/GlobalVars"
         globalVars = new List<GlobalVar>(Resources.LoadAll<GlobalVar>("GlobalVars"));
-        // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~DEBUG~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>DEBUG
         if (GameManager.Instance.isDebug) {
             globalVars = HotSaveGlobalVars(globalVars);
         }
-        // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~END DEBUG~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<END DEBUG
+    }
+
+    public void Modify(GlobalVarModifier modifier)
+    {
+        GlobalVar targetGlobalVar;
+        // Find the GlobalVar
+        foreach (GlobalVar globalVar in globalVars)
+        {
+            if (string.Equals(globalVar.name, modifier.globalVarName))
+            {
+                targetGlobalVar = globalVar;
+                break;
+            }
+        }
+        // Apply the modifier
+        targetGlobalVar.add += modifier.add;
+        targetGlobalVar.multiply *= modifier.multiply;
+        if (modifier.toggle) { targetGlobalVar.toggleCount += 1; }
     }
 }

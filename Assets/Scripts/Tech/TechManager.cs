@@ -44,7 +44,7 @@ public class TechManager : MonoBehaviour
     }
 
 
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~DEBUG~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>DEBUG
     private List<Tech> HotSaveTechs(List<Tech> original)
     {
         List<Tech> hotSave = new List<Tech>();
@@ -70,7 +70,7 @@ public class TechManager : MonoBehaviour
         }
         return hotSave;
     }
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~END DEBUG~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<END DEBUG
 
     private void ReadTechs()
     {
@@ -79,11 +79,11 @@ public class TechManager : MonoBehaviour
         hidden.Clear();
         // Read all Tech files in the folder "Resources/Techs"
         List<Tech> allTechs = new List<Tech>(Resources.LoadAll<Tech>("Techs"));
-        // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~DEBUG~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+        // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>DEBUG 
         if (GameManager.Instance.isDebug) {
             allTechs = HotSaveTechs(allTechs);
         }
-        // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~END DEBUG~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<END DEBUG
         foreach (Tech tech in allTechs)
         {
             if (tech.status == Tech.TechStatus.UNLOCKED)
