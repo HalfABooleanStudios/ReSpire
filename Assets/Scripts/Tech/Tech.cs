@@ -16,6 +16,7 @@ public class Tech : ScriptableObject
     public Sprite icon;
     public new string name;
     public string description;
+    public List<GlobalVarModifier> modifiers;
     [Header("Unlock")]
     public TechStatus status;
     public bool canAutoUnlock;
@@ -26,13 +27,14 @@ public class Tech : ScriptableObject
     public List<Tech> techRequirements;
 
     public void Initialize(
-        Sprite icon, string name, string description,
+        Sprite icon, string name, string description, List<GlobalVarModifier> modifiers,
         List<CurrencyCost> cost, bool canAutoUnlock, TechStatus status,
         bool isRootTech, List<Tech> children, List<Tech> techRequirements)
     {
         this.icon = icon;
         this.name = name;
         this.description = description;
+        this.modifiers = modifiers;
         this.cost = cost;
         this.canAutoUnlock = canAutoUnlock;
         this.status = status;
