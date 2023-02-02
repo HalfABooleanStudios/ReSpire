@@ -25,9 +25,9 @@ public class TechManager : MonoBehaviour
         }
     }
 
-    public List<Tech> unlocked; // List of unlocked Techs
-    public List<Tech> visible; // List of visible, but locked, Techs
-    public List<Tech> hidden; // List of hidden Techs
+    public List<Tech> unlocked = new List<Tech>(); // List of unlocked Techs
+    public List<Tech> visible = new List<Tech>(); // List of visible, but locked, Techs
+    public List<Tech> hidden = new List<Tech>(); // List of hidden Techs
 
     private void Awake()
     {
@@ -44,7 +44,7 @@ public class TechManager : MonoBehaviour
     }
 
 
-    // * * * * * * * * DEBUG * * * * * * * *
+    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>DEBUG
     private List<Tech> HotSaveTechs(List<Tech> original)
     {
         List<Tech> hotSave = new List<Tech>();
@@ -70,7 +70,7 @@ public class TechManager : MonoBehaviour
         }
         return hotSave;
     }
-    // * * * * * * * * END DEBUG * * * * * * * *
+    // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<END DEBUG
 
     private void ReadTechs()
     {
@@ -79,11 +79,11 @@ public class TechManager : MonoBehaviour
         hidden.Clear();
         // Read all Tech files in the folder "Resources/Techs"
         List<Tech> allTechs = new List<Tech>(Resources.LoadAll<Tech>("Techs"));
-        // * * * * * * * * DEBUG * * * * * * * * 
+        // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>DEBUG 
         if (GameManager.Instance.isDebug) {
             allTechs = HotSaveTechs(allTechs);
         }
-        // * * * * * * * * END DEBUG * * * * * * * *
+        // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<END DEBUG
         foreach (Tech tech in allTechs)
         {
             if (tech.status == Tech.TechStatus.UNLOCKED)
@@ -118,6 +118,12 @@ public class TechManager : MonoBehaviour
     public void UnlockTech(Tech tech)
     {
         tech.status = Tech.TechStatus.UNLOCKED;
+        // Apply modifiers
+        foreach (GlobalVarModifier modifier in tech.modifiers)
+        {
+            GlobalVarManager.Instance.Modify(modifier);
+        }
+        // Make children visible
         foreach (Tech child in tech.children)
         {
             if (child.canAutoUnlock)
