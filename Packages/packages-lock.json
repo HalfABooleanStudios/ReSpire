@@ -261,6 +261,12 @@
         "com.unity.modules.imgui": "1.0.0"
       }
     },
+    "com.unity.uiextensions": {
+      "version": "file:com.unity.uiextensions-release",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.unity.visualscripting": {
       "version": "1.7.8",
       "depth": 0,

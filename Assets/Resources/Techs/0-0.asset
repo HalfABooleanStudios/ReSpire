@@ -15,6 +15,7 @@ MonoBehaviour:
   icon: {fileID: 0}
   name: Tower
   description: This is the only surviving stronghold of humanity
+  modifiers: []
   status: 0
   canAutoUnlock: 1
   cost: []

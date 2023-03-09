@@ -16,6 +16,7 @@ MonoBehaviour:
   name: Drone
   description: Loyal, hard working, multi-purpose machines are how the AI interacts
     with the world
+  modifiers: []
   status: 0
   canAutoUnlock: 1
   cost: []

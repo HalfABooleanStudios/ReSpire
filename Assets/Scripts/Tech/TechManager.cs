@@ -25,6 +25,8 @@ public class TechManager : MonoBehaviour
         }
     }
 
+    public List<Tech> allTechs = new List<Tech>(); // List of all techs
+
     public List<Tech> unlocked = new List<Tech>(); // List of unlocked Techs
     public List<Tech> visible = new List<Tech>(); // List of visible, but locked, Techs
     public List<Tech> hidden = new List<Tech>(); // List of hidden Techs
@@ -33,12 +35,19 @@ public class TechManager : MonoBehaviour
     {
         if (instance && instance != this)
         {
-            Destroy(gameObject);
+            Destroy(gameObject); // Destroy self if other TechManager is present
         }
         else
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            // Read all Tech files in the folder "Resources/Techs"
+            allTechs = new List<Tech>(Resources.LoadAll<Tech>("Techs"));
+            // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>DEBUG 
+            if (GameManager.Instance.isDebug) {
+                allTechs = HotSaveTechs(allTechs);
+            }
+            // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<END DEBUG
             ReadTechs();
         }
     }
@@ -77,13 +86,6 @@ public class TechManager : MonoBehaviour
         unlocked.Clear();
         visible.Clear();
         hidden.Clear();
-        // Read all Tech files in the folder "Resources/Techs"
-        List<Tech> allTechs = new List<Tech>(Resources.LoadAll<Tech>("Techs"));
-        // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>DEBUG 
-        if (GameManager.Instance.isDebug) {
-            allTechs = HotSaveTechs(allTechs);
-        }
-        // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<END DEBUG
         foreach (Tech tech in allTechs)
         {
             if (tech.status == Tech.TechStatus.UNLOCKED)
@@ -142,7 +144,8 @@ public class TechManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            UnlockTech("Artificial Intelligence");
+            Debug.Log("here");
+            UnlockTech(visible[0]);
         }
     }
 }
